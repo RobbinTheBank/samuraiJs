@@ -3,12 +3,14 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const PAGE_CHANGED = 'ON_PAGE_CHANGED'
+const SET_IS_FETCHING = 'SET_IS_FETCHING'
 
 let initialState = {
     users: [],
     currentPage: 1,
     pageSize: 5,
-    totalUsersCount: 0
+    totalUsersCount: 0,
+    isFething: false
 }
 const usersReducer = (state = initialState, action)=>{
     switch(action.type){
@@ -52,6 +54,11 @@ const usersReducer = (state = initialState, action)=>{
                 ...state,
                 currentPage: action.page
             }
+        case SET_IS_FETCHING: 
+            return {
+                ...state,
+                isFething: action.isFething
+            }
         default: return state
     }
 }
@@ -60,5 +67,6 @@ export const unfollowUser = (userId)=>({type: UNFOLLOW, userId})
 export const setTotalUsersCount = (count)=>({type: SET_TOTAL_USERS_COUNT, count})
 export const setUser = (users)=>({type: SET_USERS, users})
 export const pageChanged = (page)=>({type: PAGE_CHANGED, page})
+export const setIsFetching = (isFething)=>({type: SET_IS_FETCHING, isFething})
 
 export default usersReducer
