@@ -1,4 +1,4 @@
-import profileReducer from './profileReducer'
+import profileReducer from './profile-reducer'
 import usersReducer from './users-reducer'
 import {createStore, combineReducers} from 'redux'
 import authReducer from './auth-reducer'

@@ -4,6 +4,7 @@ import Header from './Components/Header/Header';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import Navbar from './Components/Navbar/Navbar';
 import Profile from './Components/Profile/Profile';
+import ProfileContainer from './Components/Profile/ProfileContainer';
 import UsersContainer from './Components/Users/UsersContainer';
 
 
@@ -13,7 +14,7 @@ function App() {
         <HeaderContainer />   
         <Navbar />
       <div className='profile'>
-        <Route  path='/profile' render={()=><Profile />} />
+        <Route  path='/profile/:userId?' render={()=><ProfileContainer />} />
         <Route  path='/users' render={()=><UsersContainer />} />
       </div>
     </div>
