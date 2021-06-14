@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from "react-redux";
 import { usersAPI } from '../../api/api';
 import { follow, getUsers, unfollow, setTotalUsersCount, pageChanged, setIsFetching } from "../../redux/users-reducer";
-import Preloader from '../common/Preloader';
+import Preloader from '../common/Preloader/Preloader';
 import Users from "./Users";
 
 class UsersContainer extends React.Component {

@@ -10,8 +10,7 @@ class MyPostsContainer extends React.Component {
         <div>
             <MyPosts posts = {this.props.posts} 
                      newPostText={this.props.newPostText}
-                     addPost={this.props.addPost}
-                     updateNewPostText={this.props.updateNewPostText} />
+                     addPost={this.props.addPost} />
         </div>
     )}
 }
@@ -21,5 +20,4 @@ let  mapStateToProps = (state)=>{
         newPostText: state.profilePage.newPostText
     }
 }
-
-export default connect(mapStateToProps, { addPost, updateNewPostText})(MyPostsContainer)
+export default connect(mapStateToProps, { addPost })(MyPostsContainer)
