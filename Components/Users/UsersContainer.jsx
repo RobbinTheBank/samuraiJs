@@ -25,6 +25,7 @@ class UsersContainer extends React.Component {
                     totalUsersCount={this.props.totalUsersCount}
                     onPageChanged={this.onPageChanged}
                     followingInProgress={this.props.followingInProgress}
+                    isAuth={this.props.isAuth}
                 />
             </>
         )
@@ -38,6 +39,7 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         isFething: state.usersPage.isFething,
         followingInProgress: state.usersPage.followingInProgress,
+        isAuth: state.authPage.isAuth
 
     }
 }
