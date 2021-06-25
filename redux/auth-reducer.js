@@ -19,32 +19,26 @@ const authReducer = (state = initialState, action)=>{
     }
 }
 const setAuthUserData = (email, userId, login, isAuth)=>({type: SET_USER_DATA, data: {email, userId, login, isAuth}})
-export const getAuthUserData = ()=>(dispatch) =>{
-    return  authAPI.authMe()
-      .then(response=>{
+export const getAuthUserData = ()=> async (dispatch) =>{
+    let response = await  authAPI.authMe()
         if(response.data.resultCode === 0){
           let {email, id, login} = response.data.data;
           dispatch(setAuthUserData(email, id, login, true))
         }
-      })
 }
-export const login = (email, password, rememberMe)=>(dispatch) =>{
-    authAPI.authLogin(email, password, rememberMe, true)
-      .then(response=>{
+export const login = (email, password, rememberMe)=> async (dispatch) =>{
+     let response = await authAPI.authLogin(email, password, rememberMe, true)
         if(response.data.resultCode === 0){
           dispatch(getAuthUserData())
         }else{
           let messages = response.data.messages.length > 0 ? response.data.messages: 'Some error'
           dispatch(stopSubmit('login', {_error: messages}))
         }
-      })
 }
-export const logout = ()=>(dispatch) =>{
-    authAPI.authLogout()
-      .then(response=>{
+export const logout = ()=> async (dispatch) =>{
+    let response = await authAPI.authLogout()
         if(response.data.resultCode === 0){
           dispatch(setAuthUserData(null, null, null, false))
         }
-      })
 }
 export default authReducer
