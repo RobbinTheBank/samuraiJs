@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Users.module.css'
-import userIcon from '../../assets/userIcon.png'
+import userIcon from '../../assets/user.jpg'
 import { NavLink } from "react-router-dom";
 const User = ({ user, ...props }) => {
     return <div>

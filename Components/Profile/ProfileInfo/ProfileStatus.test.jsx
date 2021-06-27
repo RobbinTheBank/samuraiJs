@@ -35,14 +35,15 @@ describe("ProfileStatus component", () => {
         const span = root.findByType('span')
         expect(span.children[0]).toBe('status change')
     })
-    test('callback should be called', ()=>{
-        const mockCallBack = jest.fn()
-        const component = create(<ProfileStatus status={'status with call back'} upfateStatus={mockCallBack} />)
-        const root = component.root 
-        root.props.deactivateEditMode()
-        expect(mockCallBack.mock.calls.length).toBe(1)
-    })
-
-       
+    // test('callback should be called', ()=>{
+    //     const mockCallBack = jest.fn()
+    //     const component = create(<ProfileStatus status={'status with call back'} upfateStatus={mockCallBack} />)
+    //     const root = component.root
+    //     const span = root.findByType('span')
+    //     span.props.onDoubleClick()
+    //     const input = root.findByType('input')
+    //     input.props.onBlur()
+    //     expect(mockCallBack.mock.calls.length).toBe(2)
+    // })
 })
 

@@ -12,7 +12,7 @@ const TOGGLE_FOLLOWING_IN_PROGRESS = 'TOGGLE_FOLLOWING_IN_PROGRESS'
 let initialState = {
     users: [],
     currentPage: 1,
-    pageSize: 5,
+    pageSize: 20,
     totalUsersCount: 0,
     isFething: false,
     followingInProgress: [],

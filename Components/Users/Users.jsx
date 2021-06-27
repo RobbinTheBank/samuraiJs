@@ -1,7 +1,4 @@
 import React from 'react';
-import s from './Users.module.css'
-import userIcon from '../../assets/userIcon.png'
-import { NavLink } from "react-router-dom";
 import Paginator from '../common/Paginator/Paginator';
 import User from './User'
 const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, ...props}) => {

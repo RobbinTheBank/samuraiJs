@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import ProfileStatus from './ProfileStatus';
+import userPhoto from '../../../assets/user.jpg';
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -10,15 +11,21 @@ const ProfileInfo = (props) => {
     }
     let contacts = props.profile.contacts
     let profile = props.profile
+    const onMyPhotoSelected = (e)=>{
+        if(e.target.files.length){
+            props.setPhotos(e.target.files[0])
+        }
+    }
     return (
         <div>
-            <div className={s.backFon}>
-                <img src='https://c.wallhere.com/photos/ff/a4/uk_seascape_clouds_cornwall_gray_fujifilm_stives_fujix100s-932576.jpg!d' />
-            </div>
             <div className={s.descriptionBlock} >
-                <div><img src={profile.photos.large} /></div>
+                <div><img src={profile.photos.large || userPhoto} />
+                    <input type='file' onChange={onMyPhotoSelected} />
+                </div>
                 <div>{profile.fullName}</div>
-                <div>About Me: <ProfileStatus  status={props.status} updateStatus={props.updateStatus} /> </div>
+                <div>About Me: 
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus} /> 
+                </div>
                 <div>
                     Contacts:
                     <ul>
@@ -32,11 +39,11 @@ const ProfileInfo = (props) => {
                         <li>youtube: {contacts.youtube} </li>
                     </ul>
                 </div>
-                
-                
-                <div>Looking For A Job: {profile.lookingForAJob 
-                ? profile.lookingForAJobDescription 
-                : null }</div>
+
+
+                <div>Looking For A Job: {profile.lookingForAJob
+                    ? profile.lookingForAJobDescription
+                    : null}</div>
                 <div></div>
             </div>
         </div>

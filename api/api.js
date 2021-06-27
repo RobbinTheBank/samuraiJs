@@ -28,6 +28,14 @@ export const profileAPI = {
     },
     updateStatus(status){
         return instance.put(`profile/status`, {status: status})
+    },
+    savePhotos(photos){
+        const data = new FormData()
+        data.append('image', photos)
+        return instance.put(`profile/photo`, data, {
+            headers:{
+            'Content-Type': `multipart/form-data`}
+        })
     }
 }
 export const authAPI = {
