@@ -33,7 +33,8 @@ class ProfileContainer extends React.Component {
                       status={this.props.status} 
                       updateStatus={this.props.updateStatus} 
                       isAuth={this.props.isAuth} 
-                      setPhotos={this.props.setPhotos} 
+                      setPhotos={this.props.setPhotos}
+                      isOwner={!this.props.match.params.userId} 
                       />
         </div>
     )}
