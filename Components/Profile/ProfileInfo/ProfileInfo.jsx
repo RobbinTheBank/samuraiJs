@@ -4,6 +4,7 @@ import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import ProfileStatus from './ProfileStatus';
 import userPhoto from '../../../assets/user.jpg';
+import ProfileDataContactsReduxForm from './ProfileDataContactsForm';
 
 const ProfileInfo = (props) => {
     const [editMode, setEditMode] = useState(false)
@@ -27,8 +28,8 @@ const ProfileInfo = (props) => {
                     <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
                 </div>
                 <div>{editMode 
-                    ?  <ProfileDataContacts profile={profile} contacts={contacts} changeEditMode={()=>{setEditMode(false)}} />
-                    : <ProfileDataContactsForm changeEditMode={()=>{setEditMode(true)}} />}
+                    ?  <ProfileDataContactsReduxForm changeEditMode={()=>{setEditMode(false)}} profile={profile} contacts={contacts} />
+                    :  <ProfileDataContacts profile={profile} contacts={contacts} changeEditMode={()=>{setEditMode(true)}} />}
                 </div>
             </div>
         </div>
@@ -36,7 +37,7 @@ const ProfileInfo = (props) => {
 }
 const ProfileDataContacts = ({profile, contacts, changeEditMode}) => {
     return <div>
-        <div><button onClick={changeEditMode} > Save </button></div>
+        <div><button onClick={changeEditMode} > Edit </button></div>
         <div>
             <b>Full name:</b> {profile.fullName}
         </div>
@@ -61,11 +62,7 @@ const ProfileDataContacts = ({profile, contacts, changeEditMode}) => {
             : null}</div>
     </div>
 }
-const ProfileDataContactsForm = ({changeEditMode}) => {
-    return <div>
-       form <button onClick={changeEditMode}> Edit </button>
-    </div>
-}
+
 const Contact = ({ contactTitle, contactValue }) => {
     return <div className={s.contact}>
         <b>{contactTitle}:</b> {contactValue}
