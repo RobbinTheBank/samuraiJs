@@ -18,6 +18,12 @@ const ProfileInfo = (props) => {
             props.setPhotos(e.target.files[0])
         }
     }
+    const onSubmit = (formData) => {
+        props.saveProfile(formData).then(
+            () => {
+                setEditMode(false)
+            })
+    }
     return (
         <div>
             <div className={s.descriptionBlock} >
@@ -27,15 +33,15 @@ const ProfileInfo = (props) => {
                 <div>
                     <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
                 </div>
-                <div>{editMode 
-                    ?  <ProfileDataContactsReduxForm changeEditMode={()=>{setEditMode(false)}} profile={profile} contacts={contacts} />
-                    :  <ProfileDataContacts profile={profile} contacts={contacts} changeEditMode={()=>{setEditMode(true)}} />}
+                <div>{editMode
+                    ? <ProfileDataContactsReduxForm onSubmit={onSubmit} profile={profile} contacts={contacts} />
+                    : <ProfileDataContacts profile={profile} contacts={contacts} changeEditMode={() => { setEditMode(true) }} />}
                 </div>
             </div>
         </div>
     )
 }
-const ProfileDataContacts = ({profile, contacts, changeEditMode}) => {
+const ProfileDataContacts = ({ profile, contacts, changeEditMode }) => {
     return <div>
         <div><button onClick={changeEditMode} > Edit </button></div>
         <div>
