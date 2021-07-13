@@ -34,7 +34,7 @@ const ProfileInfo = (props) => {
                     <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
                 </div>
                 <div>{editMode
-                    ? <ProfileDataContactsReduxForm onSubmit={onSubmit} profile={profile} contacts={contacts} />
+                    ? <ProfileDataContactsReduxForm initialValues={profile} onSubmit={onSubmit} profile={profile} contacts={contacts} />
                     : <ProfileDataContacts profile={profile} contacts={contacts} changeEditMode={() => { setEditMode(true) }} />}
                 </div>
             </div>
@@ -52,7 +52,7 @@ const ProfileDataContacts = ({ profile, contacts, changeEditMode }) => {
         </div>
         {profile.lookingForAJob &&
             <div>
-                <b>My professional skills:</b> {profile.lookingForAJob ? 'yes' : 'no'}
+                <b>My professional skills:</b> {profile.lookingForAJobDescription}
             </div>}
         <div>
             <b>abiut me:</b> {profile.aboutMe}
@@ -63,9 +63,6 @@ const ProfileDataContacts = ({ profile, contacts, changeEditMode }) => {
             })}
 
         </div>
-        <div>Looking For A Job: {profile.lookingForAJob
-            ? profile.lookingForAJobDescription
-            : null}</div>
     </div>
 }
 

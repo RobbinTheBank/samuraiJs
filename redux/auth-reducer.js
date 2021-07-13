@@ -31,7 +31,9 @@ export const login = (email, password, rememberMe)=> async (dispatch) =>{
         if(response.data.resultCode === 0){
           dispatch(getAuthUserData())
         }else{
-          let messages = response.data.messages.length > 0 ? response.data.messages: 'Some error'
+          let messages = response.data.messages.length > 0 
+            ? response.data.messages
+            : 'Some error'
           dispatch(stopSubmit('login', {_error: messages}))
         }
 }
