@@ -7,34 +7,38 @@ import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import { initializeApp } from './redux/app-reducer';
 import Preloader from './Components/common/Preloader/Preloader';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
 import { store } from './redux/redux-store';
 import { withSuspense } from './hoc/withSuspense';
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
 
 class App extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.initializeApp()
   }
-  render(){
-    if(!this.props.initialized){
+  render() {
+    if (!this.props.initialized) {
       return <Preloader />
     }
     return (
-      <div className={style.app}>     
-          <HeaderContainer />   
-          <Navbar />
+      <div className={style.app}>
+        <HeaderContainer />
+        <Navbar />
         <div className={style.profile}>
-          <Route  path='/profile/:userId?' render={withSuspense(ProfileContainer)} />
-          <Route  path='/users' render={withSuspense(UsersContainer)} />
-          <Route  path='/login' render={()=><Login />} />
+          <Switch >
+            <Route exact path='/' render={()=><Redirect from='/' to='/profile' />}/>
+            <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)} />
+            <Route path='/users' render={withSuspense(UsersContainer)} />
+            <Route path='/login' render={() => <Login />} />
+            <Route path='*' render={()=><div>404 NOT FOUND</div>} />
+          </Switch>
         </div>
       </div>
     );
   }
 }
-let mapStateToProps = (state)=>({
+let mapStateToProps = (state) => ({
   initialized: state.appPage.initialized
 })
 const MainApp = () => {
@@ -44,5 +48,5 @@ const MainApp = () => {
     </Provider>
   </BrowserRouter>
 }
-const AppContainer = connect(mapStateToProps, {initializeApp})(App);
+const AppContainer = connect(mapStateToProps, { initializeApp })(App);
 export default MainApp
