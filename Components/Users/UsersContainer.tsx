@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import { follow, getUsers, unfollow, setTotalUsersCount, pageChanged, setIsFetching } from "../../redux/users-reducer";
 import Preloader from '../common/Preloader/Preloader';
 import Users from "./Users";
-import {getUsersPage, getCurrentPage, getPageSize,
-        getTotalUsersCount, getIsFething, getFollowingInProgress,
-        getIsAuth} from '../../redux/users-selectors'
+import {
+    getUsersPage, getCurrentPage, getPageSize,
+    getTotalUsersCount, getIsFething, getFollowingInProgress,
+    getIsAuth
+} from '../../redux/users-selectors'
 import { UserType } from '../../redux/types/types';
 import { AppStateType } from '../../redux/redux-store';
+import { useEffect } from 'react';
 
 type PropsType = {
     isFething: boolean
@@ -16,38 +19,34 @@ type PropsType = {
     totalUsersCount: number
     isAuth: boolean
     users: Array<UserType>
-    follow: ()=> void
-    unfollow: ()=> void
-    followingInProgress:  Array<number>
-    getUsers: (currentPage: number, pageSize: number)=> void
-    pageChanged: (currentPage: number)=> void
-    onPageChanged: (currentPage: number)=> void 
+    follow: () => void
+    unfollow: () => void
+    followingInProgress: Array<number>
+    getUsers: (currentPage: number, pageSize: number) => void
+    pageChanged: (currentPage: number) => void
+    onPageChanged: (currentPage: number) => void
 }
-class UsersContainer extends React.Component<PropsType> {
-    componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+
+const UsersContainer: React.FC<PropsType> = (props) => {
+    useEffect(() => {
+        props.getUsers(props.currentPage, props.pageSize)
+    }, [])
+    const onPageChanged = (currentPage: number) => {
+        props.getUsers(currentPage, props.pageSize)
+        props.pageChanged(currentPage)
     }
-    
-    onPageChanged = (currentPage: number) => {
-        this.props.getUsers(currentPage, this.props.pageSize)
-        this.props.pageChanged(currentPage)
-    }
-    render() {
-        return (
-            <> {this.props.isFething ? <Preloader /> : null}
-                <Users users={this.props.users}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
-                    currentPage={this.props.currentPage}
-                    pageSize={this.props.pageSize}
-                    totalUsersCount={this.props.totalUsersCount}
-                    onPageChanged={this.onPageChanged}
-                    followingInProgress={this.props.followingInProgress}
-                    isAuth={this.props.isAuth}
-                />
-            </>
-        )
-    }
+    return <> {props.isFething ? <Preloader /> : null}
+        <Users users={props.users}
+            follow={props.follow}
+            unfollow={props.unfollow}
+            currentPage={props.currentPage}
+            pageSize={props.pageSize}
+            totalUsersCount={props.totalUsersCount}
+            onPageChanged={onPageChanged}
+            followingInProgress={props.followingInProgress}
+            isAuth={props.isAuth}
+        />
+    </>
 }
 let mapStateToProps = (state: AppStateType) => {
     return {
