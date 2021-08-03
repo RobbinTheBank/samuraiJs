@@ -1,13 +1,6 @@
 import { authAPI, securityAPI } from "../api/api"
 import {stopSubmit} from 'redux-form'
 
-export type initialStateType = {
-  email: string | null
-  userId: number | null
-  login: string | null
-  isAuth: boolean
-  urlCaptcha: string | null
-}
 type dataObjectSetAuthUserDataActionType = {
   email: string | null
   userId: number | null
@@ -34,12 +27,12 @@ export type loginType = {
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
-let initialState: initialStateType = {
-    email: null,
-    userId: null,
-    login: null,
+let initialState = {
+    email: null as (string | null),
+    userId: null as number | null,
+    login: null as string | null,
     isAuth: false,
-    urlCaptcha: null,
+    urlCaptcha: null as string | null,
 }
 const authReducer = (state = initialState, action: any): initialStateType =>{
     switch(action.type){
@@ -90,4 +83,5 @@ export const getCaptchaUrl = ()=> async (dispatch: any)=>{
   const urlCaptcha = response.data.url
   dispatch(setCaptchaUrl(urlCaptcha))
 }
+export type initialStateType = typeof initialState
 export default authReducer

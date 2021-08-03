@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux";
-import { follow, getUsers, unfollow, setTotalUsersCount, pageChanged, setIsFetching } from "../../redux/users-reducer";
+import { follow, getUsers, unfollow } from "../../redux/users-reducer";
 import Preloader from '../common/Preloader/Preloader';
 import Users from "./Users";
 import {
@@ -12,28 +12,28 @@ import { UserType } from '../../redux/types/types';
 import { AppStateType } from '../../redux/redux-store';
 import { useEffect } from 'react';
 
-type PropsType = {
+type PropsType = MapStatePropsType & MapDispatchPropsType 
+
+type MapStatePropsType = {
     isFething: boolean
     currentPage: number
     pageSize: number
     totalUsersCount: number
     isAuth: boolean
     users: Array<UserType>
-    follow: () => void
-    unfollow: () => void
     followingInProgress: Array<number>
-    getUsers: (currentPage: number, pageSize: number) => void
-    pageChanged: (currentPage: number) => void
-    onPageChanged: (currentPage: number) => void
 }
-
+type MapDispatchPropsType = {
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+}
 const UsersContainer: React.FC<PropsType> = (props) => {
     useEffect(() => {
         props.getUsers(props.currentPage, props.pageSize)
     }, [])
     const onPageChanged = (currentPage: number) => {
         props.getUsers(currentPage, props.pageSize)
-        props.pageChanged(currentPage)
     }
     return <> {props.isFething ? <Preloader /> : null}
         <Users users={props.users}
@@ -48,7 +48,7 @@ const UsersContainer: React.FC<PropsType> = (props) => {
         />
     </>
 }
-let mapStateToProps = (state: AppStateType) => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: getUsersPage(state),
         currentPage: getCurrentPage(state),
@@ -57,12 +57,11 @@ let mapStateToProps = (state: AppStateType) => {
         isFething: getIsFething(state),
         followingInProgress: getFollowingInProgress(state),
         isAuth: getIsAuth(state)
-
     }
 }
-export default connect(mapStateToProps, {
-    follow, unfollow, getUsers,
-    setTotalUsersCount, pageChanged, setIsFetching
+export default connect<MapStatePropsType, MapDispatchPropsType, AppStateType>(
     //@ts-ignore
+    mapStateToProps, {
+    follow, unfollow, getUsers
 })(UsersContainer)
 

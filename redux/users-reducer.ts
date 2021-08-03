@@ -102,6 +102,7 @@ type setIsFetchingActionType = {
 export const getUsers = (currentPage: number, pageSize: number) => async (dispatch: any) => {
     dispatch(setIsFetching(true))
     let response = await usersAPI.getUsers(currentPage, pageSize)
+            dispatch(pageChanged(currentPage))
             dispatch(setIsFetching(false))
             dispatch(setUser(response.data.items))
             dispatch(setTotalUsersCount(response.data.totalCount))
