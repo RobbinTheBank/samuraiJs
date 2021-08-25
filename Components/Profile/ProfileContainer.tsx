@@ -3,16 +3,16 @@ import Profile from './Profile';
 import { connect } from 'react-redux';
 import { getStatus, getUserProfile, updateStatus, setPhotos, saveProfile } from '../../redux/profile-reducer';
 //@ts-ignore
-import { withRouter } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router';
 //import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { useEffect } from 'react';
 import { AppStateType } from '../../redux/redux-store';
-import { RouteComponentProps } from 'react-router-dom';
 
 type PathParamsType = {
-    userId: string | null
+    userId: string 
 }
+//@ts-ignore
 type PropsType = mapStatePropsType & mapDispatchPropsType & RouteComponentProps<PathParamsType>
 
 type mapStatePropsType = ReturnType<typeof mapStateToProps>
@@ -32,8 +32,13 @@ const ProfileContainer: React.FC<PropsType>  = (props)=>{
                 props.history.push('/login')
             }
         }
-        props.getUserProfile(userId)
-        props.getStatus(userId)
+        if(!userId){
+            console.error("ID should exists in URI params or in state ('authorizedUserId')")
+        }else{
+            props.getUserProfile(userId)
+            props.getStatus(userId)
+        }
+        
     }
     useEffect(()=>{
         processingUsers()
@@ -52,7 +57,6 @@ const ProfileContainer: React.FC<PropsType>  = (props)=>{
     )
 }
 let mapStateToProps = (state: AppStateType) => ({
-    //@ts-ignore
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     isAuth: state.authPage.isAuth,
@@ -64,3 +68,4 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, setPhotos, saveProfile})
     //@ts-ignore
 )(ProfileContainer)
+

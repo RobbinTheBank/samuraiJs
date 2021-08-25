@@ -14,7 +14,7 @@ let initialState = {
         { id: 2, message: 'message 2', likesCount: 5 },
     ] as Array<PostType>,
     newPostText: '',
-    profile: null as ProfileType,
+    profile: null as ProfileType | null,
     status: ''
 } 
 const profileReducer = (state = initialState, action: any): InitialStateType => {
