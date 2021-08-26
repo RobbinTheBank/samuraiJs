@@ -1,4 +1,4 @@
-import { authAPI, securityAPI } from "../api/api"
+import { authAPI, ResultCaptchaEnum, ResultCodeEnum, securityAPI } from "../api/api"
 import { FormAction, stopSubmit } from 'redux-form'
 import { ThunkAction } from "redux-thunk"
 import { AppStateType } from "./redux-store"
@@ -60,9 +60,9 @@ type setCaptchaUrlActionType = {
 }
 
 export const getAuthUserData = (): ThunkType  => async (dispatch) => {
-  let response = await authAPI.authMe()
-  if (response.data.resultCode === 0) {
-    let { email, id, login } = response.data.data;
+  let authMeData = await authAPI.authMe()
+  if (authMeData.resultCode === ResultCodeEnum.Success) {
+    let { email, id, login } = authMeData.data;
     dispatch(setAuthUserData(email, id, login, true))
   }
 }
@@ -84,7 +84,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 }
 export const logout = (): ThunkType => async (dispatch) => {
   let response = await authAPI.authLogout()
-  if (response.data.resultCode === 0) {
+  if (response.data.resultCode === ResultCaptchaEnum.CaptchaIsRequired) {
     dispatch(setAuthUserData(null, null, null, false))
   }
 }

@@ -94,7 +94,7 @@ export const setPhotos = (photos: any) => async (dispatch: any) => {
         dispatch(successPhotos(response.data.data.photos))
     }
 }
-export const saveProfile = (profile: PostType) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
     let userId = getState().authPage.userId
     let response = await profileAPI.saveProfile(profile)
      if(response.data.resultCode === 0){
