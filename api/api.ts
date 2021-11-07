@@ -1,16 +1,7 @@
 import  axios from 'axios'
-import { ProfileType } from '../redux/types/types'
+import { ProfileType, UserType } from '../redux/types/types'
 
-export enum ResultCodeEnum {
-    Success = 0,
-    Error = 1
-
-}
-export enum ResultCaptchaEnum {
-    CaptchaIsRequired = 10
-}
-
-const instance = axios.create({
+export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
@@ -18,17 +9,6 @@ const instance = axios.create({
         
     }
 })
-export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10){
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-    },
-    follow(userId: number){
-        return instance.post('follow/' + userId)
-    },
-    unfollow(userId: number){
-        return instance.delete('follow/' + userId)
-    }
-}
 export const profileAPI = {
     getProfile(userId: number){
         return instance.get(`profile/` + userId)
@@ -51,29 +31,26 @@ export const profileAPI = {
         return instance.put('profile/', profile)
     }
 }
-export const authAPI = {
-    async authMe(){
-        const resp = await instance.get<MeResponseType>(`auth/me`)
-        return resp.data
-    },
-    authLogin(email: string, password: string, rememberMe: boolean = false, captcha: null | string = null){
-        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
-    },
-    authLogout(){
-        return instance.delete(`auth/login`)
-    }
-} 
-type MeResponseType = {
-    data: {
-        id: number
-        email: string
-        login: string
-    }
-    resultCode: ResultCodeEnum | ResultCaptchaEnum
-    messages: string
-}
 export const securityAPI = {
-    getCaptchaUrl(){
-        return instance.get('security/get-captcha-url')
-    }
+        getCaptchaUrl(){
+            return instance.get('security/get-captcha-url')
+        }
+}
+
+export type GetItems = {
+    items: Array<UserType>
+    totalCount: number
+    error: string | null
+}
+export type APIResponseData<D = {}, RC = ResultCodeEnum> = {
+    data: D
+    messages: string
+    resultCode: RC
+}
+export enum ResultCodeEnum {
+    Success = 0,
+    Error = 1
+}
+export enum ResultCaptchaEnum {
+    CaptchaIsRequired = 10
 }

@@ -36,5 +36,5 @@ const ProfileDataContactsForm = (props) => {
         </div>
     </form>
 }
-const ProfileDataContactsReduxForm = reduxForm({ form: 'edite-profile' })(ProfileDataContactsForm)
+const ProfileDataContactsReduxForm = reduxForm({ form: 'edit-profile' })(ProfileDataContactsForm)
 export default ProfileDataContactsReduxForm
