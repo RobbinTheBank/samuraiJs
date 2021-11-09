@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actions as addPost } from '../../../redux/profile-reducer';
+import { actions } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 
 class MyPostsContainer extends React.Component {
@@ -20,4 +20,4 @@ let  mapStateToProps = (state)=>{
         newPostText: state.profilePage.newPostText
     }
 }
-export default connect(mapStateToProps, { addPost })(MyPostsContainer)
+export default connect(mapStateToProps, {addPost: actions.addPost})(MyPostsContainer)

@@ -1,9 +1,7 @@
-import { Dispatch } from "redux"
-import { stopSubmit } from "redux-form"
-import { ThunkAction } from "redux-thunk"
+import { FormAction, stopSubmit } from "redux-form"
 import { ResultCodeEnum } from "../api/api"
 import { profileAPI } from "../api/profile-api"
-import { AppStateType, GetInferActions } from "./redux-store"
+import { BaseThunkType, GetInferActions } from "./redux-store"
 import { PhotosType, PostType, ProfileType } from "./types/types"
 
 export const actions = {
@@ -68,7 +66,7 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
         dispatch(actions.setStatus(status))
     }
 }
-export const setPhotos = (file: any): ThunkType => async (dispatch) => {
+export const setPhotos = (file: File): ThunkType => async (dispatch) => {
     let data = await profileAPI.savePhotos(file)
     if(data.resultCode === ResultCodeEnum.Success){
         dispatch(actions.successPhotos(data.data.photos))
@@ -85,7 +83,6 @@ export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch,
         }
      }
     else{
-        //@ts-ignore
         dispatch(stopSubmit('edit-profile', {'contacts':{'facebook': data.messages[0]} }))
         return Promise.reject(data.messages[0])
      }
@@ -94,4 +91,4 @@ export default profileReducer
 
 type InitialStateType = typeof initialState
 type ActionsTypes = GetInferActions<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+type ThunkType = BaseThunkType<ActionsTypes | FormAction>

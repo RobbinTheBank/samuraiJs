@@ -1,9 +1,9 @@
 import { authAPI } from "../api/auth-api"
 import {ResultCaptchaEnum, ResultCodeEnum } from "../api/api"
 import { securityAPI } from "../api/api"
-import { stopSubmit } from 'redux-form'
+import { FormAction, stopSubmit } from 'redux-form'
 import { ThunkAction } from "redux-thunk"
-import { AppStateType, GetInferActions } from "./redux-store"
+import { AppStateType, BaseThunkType, GetInferActions } from "./redux-store"
 
 let initialState = {
   email: null as (string | null),
@@ -48,7 +48,6 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     let messages = data.data.messages.length > ResultCodeEnum.Success
       ? data.data.messages
       : 'Some error'
-      //@ts-ignore
       dispatch(stopSubmit('login', { _error: messages }))
   }
 }
@@ -67,5 +66,5 @@ export default authReducer
 
 export type initialStateType = typeof initialState
 type ActionsTypes = GetInferActions<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+type ThunkType = BaseThunkType<ActionsTypes | FormAction>
 

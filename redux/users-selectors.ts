@@ -25,3 +25,9 @@ export const getFollowingInProgress =(state: AppStateType)=>{
 export const getIsAuth =(state: AppStateType)=>{
     return state.authPage.isAuth
 }
+export const getDialogsMessages = (state: AppStateType)=>{
+    return state.dialogsPage.messages
+}
+export const getDialogsData = (state: AppStateType) =>{
+    return state.dialogsPage.dialogs
+}

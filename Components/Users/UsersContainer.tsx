@@ -12,22 +12,6 @@ import { UserType } from '../../redux/types/types';
 import { AppStateType } from '../../redux/redux-store';
 import { useEffect } from 'react';
 
-type PropsType = MapStatePropsType & MapDispatchPropsType 
-
-type MapStatePropsType = {
-    isFething: boolean
-    currentPage: number
-    pageSize: number
-    totalUsersCount: number
-    isAuth: boolean
-    users: Array<UserType>
-    followingInProgress: Array<number>
-}
-type MapDispatchPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    getUsers: (currentPage: number, pageSize: number) => void
-}
 const UsersContainer: React.FC<PropsType> = (props) => {
     useEffect(() => {
         props.getUsers(props.currentPage, props.pageSize)
@@ -65,3 +49,19 @@ export default connect<MapStatePropsType, MapDispatchPropsType, AppStateType>(
     follow, unfollow, getUsers
 })(UsersContainer)
 
+type PropsType = MapStatePropsType & MapDispatchPropsType 
+
+type MapStatePropsType = {
+    isFething: boolean
+    currentPage: number
+    pageSize: number
+    totalUsersCount: number
+    isAuth: boolean
+    users: Array<UserType>
+    followingInProgress: Array<number>
+}
+type MapDispatchPropsType = {
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+}

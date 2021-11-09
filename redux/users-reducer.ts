@@ -3,7 +3,7 @@ import { ThunkAction } from "redux-thunk"
 import { ResultCodeEnum } from "../api/api"
 import { usersAPI } from "../api/users-api"
 import { updateObjectsInArray } from "../utils/updateObjectsInArray"
-import { AppStateType, GetInferActions } from "./redux-store"
+import { AppStateType, BaseThunkType, GetInferActions } from "./redux-store"
 import { UserType } from "./types/types"
 
 export const actions = {
@@ -98,4 +98,4 @@ export default usersReducer
 
 type InitialStateType = typeof initialState
 type ActionsTypes = GetInferActions<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+type ThunkType = BaseThunkType<ActionsTypes>
