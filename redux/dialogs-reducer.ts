@@ -28,5 +28,8 @@ const dialogsReducer = (state = initialState, action: ActionsType): InitialState
     }
 }
 export default dialogsReducer
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 type ActionsType = GetInferActions<typeof actions>
+
+export type DialogsType = typeof initialState.dialogs
+export type MessagesType = typeof initialState.messages

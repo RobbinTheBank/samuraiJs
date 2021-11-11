@@ -19,6 +19,7 @@ const UsersContainer: React.FC<PropsType> = (props) => {
     const onPageChanged = (currentPage: number) => {
         props.getUsers(currentPage, props.pageSize)
     }
+    console.log(props.users)
     return <> {props.isFething ? <Preloader /> : null}
         <Users users={props.users}
             follow={props.follow}
@@ -43,8 +44,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         isAuth: getIsAuth(state)
     }
 }
-export default connect<MapStatePropsType, MapDispatchPropsType, AppStateType>(
-    //@ts-ignore
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(
     mapStateToProps, {
     follow, unfollow, getUsers
 })(UsersContainer)
