@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { follow, getUsers, unfollow } from "../../redux/users-reducer";
 import Preloader from '../common/Preloader/Preloader';
 import Users from "./Users";
@@ -11,8 +11,10 @@ import {
 import { UserType } from '../../redux/types/types';
 import { AppStateType } from '../../redux/redux-store';
 import { useEffect } from 'react';
-
-const UsersContainer: React.FC<PropsType> = (props) => {
+import { compose } from 'redux';
+import { withRouter } from 'react-router';
+{/*
+const UsersContaine: React.FC<PropsType> = (props) => {
     useEffect(() => {
         props.getUsers(props.currentPage, props.pageSize)
     }, [])
@@ -65,3 +67,18 @@ type MapDispatchPropsType = {
     unfollow: (userId: number) => void
     getUsers: (currentPage: number, pageSize: number) => void
 }
+
+*/}
+export const UsersContainer: React.FC<UsersContainerProps> = (props)=>{
+    const isFetching = useSelector(getIsFething)
+    return <>
+        <h2>users</h2>
+        {isFetching ? <Preloader /> : null}
+        <Users />
+    </>
+}
+
+type UsersContainerProps = {
+    
+}   
+

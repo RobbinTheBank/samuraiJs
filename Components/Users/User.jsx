@@ -12,11 +12,11 @@ const User = ({ user, ...props }) => {
         </div>
         <div>
             {user.followed
-                ? <button disabled={!props.isAuth || props.followingInProgress
+                ? <button disabled={ props.followingInProgress
                     .some(id => id === user.id)} onClick={() => {
                         props.unfollow(user.id)
                     }} >Unfollow </button>
-                : <button disabled={!props.isAuth || props.followingInProgress
+                : <button disabled={ props.followingInProgress
                     .some(id => id === user.id)} onClick={() => {
                         props.follow(user.id)
                     }
