@@ -16,6 +16,7 @@ const Paginator: React.FC<PropsType> = ({totalUsersCount, pageSize, currentPage,
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
 }
+console.log(currentPage)
     let [boxNumber, setBoxNumber] = useState(1)
     let left = ((boxNumber -1 ) * boxSize) + 1
     let rigth = boxNumber * boxSize

@@ -27,3 +27,7 @@ type MapStateProps = {
 type DispatchPropsType = {
 }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> master

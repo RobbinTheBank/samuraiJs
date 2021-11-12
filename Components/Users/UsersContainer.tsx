@@ -1,17 +1,22 @@
 import React from 'react'
-import { connect } from "react-redux";
-import { follow, getUsers, unfollow } from "../../redux/users-reducer";
+import { useSelector } from "react-redux";
 import Preloader from '../common/Preloader/Preloader';
 import Users from "./Users";
-import {
-    getUsersPage, getCurrentPage, getPageSize,
-    getTotalUsersCount, getIsFething, getFollowingInProgress,
-    getIsAuth
-} from '../../redux/users-selectors'
-import { UserType } from '../../redux/types/types';
-import { AppStateType } from '../../redux/redux-store';
-import { useEffect } from 'react';
+import {getIsFething,} from '../../redux/users-selectors'
 
+<<<<<<< HEAD
+export const UsersContainer: React.FC<UsersContainerProps> = (props)=>{
+    const isFetching = useSelector(getIsFething)
+    return <>
+        <h2>users</h2>
+        {isFetching ? <Preloader /> : null}
+        <Users />
+    </>
+}
+type UsersContainerProps = {
+    
+}   
+=======
 const UsersContainer: React.FC<PropsType> = (props) => {
     useEffect(() => {
         props.getUsers(props.currentPage, props.pageSize)
@@ -50,18 +55,5 @@ export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType
 })(UsersContainer)
 
 type PropsType = MapStatePropsType & MapDispatchPropsType 
+>>>>>>> master
 
-type MapStatePropsType = {
-    isFething: boolean
-    currentPage: number
-    pageSize: number
-    totalUsersCount: number
-    isAuth: boolean
-    users: Array<UserType>
-    followingInProgress: Array<number>
-}
-type MapDispatchPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    getUsers: (currentPage: number, pageSize: number) => void
-}
