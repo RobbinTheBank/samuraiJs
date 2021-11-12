@@ -9,18 +9,6 @@ import { createFormField, Input } from '../common/FormsControls/FormsControls'
 //@ts-ignore
 import s from '../common/FormsControls/FormsControls.module.css'
 
-type LoginFormValuesType = {
-    email: string 
-    password: string 
-    rememberMe: boolean
-    captcha: string
-}
-type LoginFormOwnPropsType = {
-    urlCaptcha: string | null
-}
-type LoginFormValuesTypeKeys = GetStringKeys<LoginFormValuesType>
-export type GetStringKeys<T> = Extract<keyof T, string>
-
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> & LoginFormOwnPropsType> 
     = ({handleSubmit, error, urlCaptcha})=>{
     return <form onSubmit={handleSubmit} >
@@ -58,6 +46,7 @@ let mapStateToProps = (state: AppStateType)=>({
     isAuth: state.authPage.isAuth,
     urlCaptcha: state.authPage.urlCaptcha
 })
+export default connect(mapStateToProps, {login})(Login)
 type MapStateToPropsType = {
     isAuth: boolean
     urlCaptcha: string | null
@@ -65,4 +54,15 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     login: (email: string, password: string, rememberMe: boolean, captcha: string)=> void
 }
-export default connect(mapStateToProps, {login})(Login)
+type LoginFormValuesType = {
+    email: string 
+    password: string 
+    rememberMe: boolean
+    captcha: string
+}
+type LoginFormOwnPropsType = {
+    urlCaptcha: string | null
+}
+type LoginFormValuesTypeKeys = GetStringKeys<LoginFormValuesType>
+export type GetStringKeys<T> = Extract<keyof T, string>
+

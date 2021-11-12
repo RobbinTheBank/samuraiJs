@@ -11,12 +11,21 @@ import { AppStateType, store } from './redux/redux-store';
 import { withSuspense } from './hoc/withSuspense';
 import { compose } from 'redux';
 import { ComponentType } from 'hoist-non-react-statics/node_modules/@types/react';
+<<<<<<< HEAD
 import {UsersContainer} from './Components/Users/UsersContainer'
 
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'))
 
 const SuspenseDialogs = withSuspense(DialogsContainer)
+=======
+const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
+const DialogsContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'))
+
+const SuspenseDialogs = withSuspense(DialogsContainer)
+const SuspenseUsers = withSuspense(UsersContainer)
+>>>>>>> master
 const SuspenseProfile = withSuspense(ProfileContainer)
 
 class App extends React.Component<MapStateProps & DispatchProps> {
@@ -47,8 +56,12 @@ class App extends React.Component<MapStateProps & DispatchProps> {
           <Switch >
             <Route exact path='/' render={() => <Redirect from='/' to='/profile' />} />
             <Route path='/profile/:userId?' render={()=> <SuspenseProfile />} />
+<<<<<<< HEAD
             <Route path='/users' render={()=> <UsersContainer />} />
             <Route path='/dialogs' render={()=><SuspenseDialogs />} />
+=======
+            <Route path='/users' render={withSuspense(UsersContainer)} />
+>>>>>>> master
             <Route path='/login' render={() => <Login />} />
             <Route path='*' render={() => <div>404 NOT FOUND</div>} />
           </Switch>
