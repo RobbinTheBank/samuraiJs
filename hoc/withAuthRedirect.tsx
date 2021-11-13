@@ -27,4 +27,3 @@ type MapStateProps = {
 type DispatchPropsType = {
 }
 
-

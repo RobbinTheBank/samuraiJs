@@ -44,7 +44,6 @@ const Users: React.FC<PropsType> = (props) => {
                     </div>
                     )}
             </div>
-            <div></div>
         </div>
     )
 }
