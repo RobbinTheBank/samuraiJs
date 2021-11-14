@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
-import HeaderContainer from './Components/Header/HeaderContainer';
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import { initializeApp } from './redux/app-reducer';
@@ -12,7 +11,8 @@ import { withSuspense } from './hoc/withSuspense';
 import { compose } from 'redux';
 import { ComponentType } from 'hoist-non-react-statics/node_modules/@types/react';
 import {UsersContainer} from './Components/Users/UsersContainer'
-
+import style from './App.module.css'
+import Header from './Components/Header/Header';
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'))
 
@@ -32,16 +32,12 @@ class App extends React.Component<MapStateProps & DispatchProps> {
     window.removeEventListener('unhandledrejection', this.catchAllUnhendledErrors)
   }
   render() {
-
-    const style = require('./App.module.css'); // without this expression produces an error 
-     //(Property does not exist on type 'typeof import("*.module.css")'. )
-    
     if (!this.props.initialized) {
       return <Preloader />
     }
     return (
       <div className={style.app}>
-        <HeaderContainer />
+        <Header />
         <Navbar />
         <div className={style.profile}>
           <Switch >

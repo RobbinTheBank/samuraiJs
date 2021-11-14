@@ -26,6 +26,9 @@ export type ProfileType = {
     fullName: string
     contacts: ContactsType
     photos: PhotosType 
+    aboutMe: string
+    lookingForAJobDescription: string
+    
 }
 export type UserType = {
     id: number 
@@ -33,4 +36,10 @@ export type UserType = {
     status: string 
     photos: PhotosType 
     followed: boolean
+}
+export type LogUser = {
+    email: string
+     password: string
+      rememberMe: boolean
+       captcha: string
 }

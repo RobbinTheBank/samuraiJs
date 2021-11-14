@@ -1,24 +1,25 @@
 import React from 'react';
-import s from './Users.module.css'
-import userIcon from '../../assets/user.jpg'
 import { NavLink } from "react-router-dom";
-const User = ({ user, ...props }) => {
+import { UserType } from '../../redux/types/types';
+import userIcon from '../../assets/user.jpg'
+import s from'./Users.module.css'
+
+const User: React.FC<PropsType> = ({ user, followingInProgress, unfollow, follow }) => {
     return <div>
         <div >
-        {console.log(user)}
             <NavLink to={'/profile/' + user.id}>
                 <img className={s.userPhoto} src={user.photos.large != null ? user.photos.large : userIcon} />
             </NavLink>
         </div>
         <div>
             {user.followed
-                ? <button disabled={ props.followingInProgress
+                ? <button disabled={followingInProgress
                     .some(id => id === user.id)} onClick={() => {
-                        props.unfollow(user.id)
+                        unfollow(user.id)
                     }} >Unfollow </button>
-                : <button disabled={ props.followingInProgress
+                : <button disabled={followingInProgress
                     .some(id => id === user.id)} onClick={() => {
-                        props.follow(user.id)
+                        follow(user.id)
                     }
                     } >Follow</button>}
         </div>
@@ -29,3 +30,10 @@ const User = ({ user, ...props }) => {
     </div>
 }
 export default User
+
+type PropsType = {
+    user: UserType
+    followingInProgress: Array<number>
+    unfollow: (user: number) => void
+    follow: (user: number) => void
+}

@@ -5,9 +5,7 @@ import { WrappedFieldMetaProps} from 'redux-form/lib/Field'
 import { FieldValidatorType } from '../../../utils/validators/validators'
 import React from 'react'
 
-type FormControlPropsType = {
-    meta: WrappedFieldMetaProps
-}
+
 const FormControl: React.FC<FormControlPropsType> = ({meta,  ...props}) =>{
     const hasError = meta.touched && meta.error 
     return <div className={s.formControl + ' ' + (hasError ? s.error : '')} >
@@ -42,3 +40,7 @@ export function createFormField<FormKeysType extends string>(placeholder: string
                /> {text}
     </div>
 }
+type FormControlPropsType = {
+    meta: WrappedFieldMetaProps
+}
+export type GetStringKeys<T> = Extract<keyof T, string>

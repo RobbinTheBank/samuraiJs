@@ -31,3 +31,6 @@ export const getDialogsMessages = (state: AppStateType)=>{
 export const getDialogsData = (state: AppStateType) =>{
     return state.dialogsPage.dialogs
 }
+export const selectCurrentUseLogin = (state: AppStateType)=>{
+    return state.authPage.login
+}

@@ -16,7 +16,6 @@ let initialState = {
         { id: 1, message: 'message 1', likesCount: 15 },
         { id: 2, message: 'message 2', likesCount: 5 },
     ] as Array<PostType>,
-    newPostText: '',
     profile: null as ProfileType | null,
     status: ''
 } 
@@ -27,7 +26,6 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
             return {
                 ...state,
                 posts: [...state.posts, { id: 5, message: body, likesCount: 0 }],
-                newPostText: '',
             }
         case 'SA/SET_USER_PROFILE':
             return {
