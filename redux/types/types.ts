@@ -21,16 +21,25 @@ export type SavePhotoResponse = {
     photos: PhotosType
 }
 export type ProfileType = {
-    userId: number | null
+    userId: number 
     lookingForAJob: boolean
     fullName: string
     contacts: ContactsType
     photos: PhotosType 
+    aboutMe: string
+    lookingForAJobDescription: string
+    
 }
 export type UserType = {
-    id: number | null
-    name: string | null
-    status: string | null
-    photos: PhotosType | null
-    followed: boolean | null
+    id: number 
+    name: string 
+    status: string 
+    photos: PhotosType 
+    followed: boolean
+}
+export type LogUser = {
+    email: string
+     password: string
+      rememberMe: boolean
+       captcha: string
 }

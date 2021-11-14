@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
-import HeaderContainer from './Components/Header/HeaderContainer';
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import { initializeApp } from './redux/app-reducer';
@@ -11,12 +10,13 @@ import { AppStateType, store } from './redux/redux-store';
 import { withSuspense } from './hoc/withSuspense';
 import { compose } from 'redux';
 import { ComponentType } from 'hoist-non-react-statics/node_modules/@types/react';
+import {UsersContainer} from './Components/Users/UsersContainer'
+import style from './App.module.css'
+import Header from './Components/Header/Header';
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
-const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
 const DialogsContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'))
 
 const SuspenseDialogs = withSuspense(DialogsContainer)
-const SuspenseUsers = withSuspense(UsersContainer)
 const SuspenseProfile = withSuspense(ProfileContainer)
 
 class App extends React.Component<MapStateProps & DispatchProps> {
@@ -32,22 +32,19 @@ class App extends React.Component<MapStateProps & DispatchProps> {
     window.removeEventListener('unhandledrejection', this.catchAllUnhendledErrors)
   }
   render() {
-
-    const style = require('./App.module.css'); // without this expression produces an error 
-     //(Property does not exist on type 'typeof import("*.module.css")'. )
-    
     if (!this.props.initialized) {
       return <Preloader />
     }
     return (
       <div className={style.app}>
-        <HeaderContainer />
+        <Header />
         <Navbar />
         <div className={style.profile}>
           <Switch >
             <Route exact path='/' render={() => <Redirect from='/' to='/profile' />} />
             <Route path='/profile/:userId?' render={()=> <SuspenseProfile />} />
-            <Route path='/users' render={withSuspense(UsersContainer)} />
+            <Route path='/users' render={()=> <UsersContainer />} />
+            <Route path='/dialogs' render={()=><SuspenseDialogs />} />
             <Route path='/login' render={() => <Login />} />
             <Route path='*' render={() => <div>404 NOT FOUND</div>} />
           </Switch>

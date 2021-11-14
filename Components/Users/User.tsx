@@ -1,15 +1,11 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { UserType } from '../../redux/types/types';
-import Preloader from '../common/Preloader/Preloader';
+import userIcon from '../../assets/user.jpg'
+import s from'./Users.module.css'
 
-const User: React.FC<PropsType> = ({ user, isAuth, followingInProgress, unfollow, follow }) => {
-
-    let s = require('./Users.module.css')
-    let userIcon = require('../../assets/user.jpg')
-    return <>
-        {!user ? <Preloader />
-            : null}
+const User: React.FC<PropsType> = ({ user, followingInProgress, unfollow, follow }) => {
+    return <div>
         <div >
             <NavLink to={'/profile/' + user.id}>
                 <img className={s.userPhoto} src={user.photos.large != null ? user.photos.large : userIcon} />
@@ -31,16 +27,13 @@ const User: React.FC<PropsType> = ({ user, isAuth, followingInProgress, unfollow
             <div>{user.name}</div>
             <div>{user.status}</div>
         </div>
-
-    </>
-
-
+    </div>
 }
 export default User
+
 type PropsType = {
     user: UserType
-    isAuth: boolean
     followingInProgress: Array<number>
-    unfollow: (userId: number) => void
-    follow: (userId: number) => void
+    unfollow: (user: number) => void
+    follow: (user: number) => void
 }

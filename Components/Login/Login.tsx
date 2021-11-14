@@ -5,7 +5,7 @@ import { InjectedFormProps, reduxForm } from 'redux-form'
 import { login } from '../../redux/auth-reducer'
 import { AppStateType } from '../../redux/redux-store'
 import { required } from '../../utils/validators/validators'
-import { createFormField, Input } from '../common/FormsControls/FormsControls'
+import { createFormField, GetStringKeys, Input } from '../common/FormsControls/FormsControls'
 //@ts-ignore
 import s from '../common/FormsControls/FormsControls.module.css'
 
@@ -64,5 +64,5 @@ type LoginFormOwnPropsType = {
     urlCaptcha: string | null
 }
 type LoginFormValuesTypeKeys = GetStringKeys<LoginFormValuesType>
-export type GetStringKeys<T> = Extract<keyof T, string>
+
 

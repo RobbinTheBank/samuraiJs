@@ -14,14 +14,16 @@ export const actions = {
     setTotalUsersCount: (count: number) => ({ type: 'SA/SET_TOTAL_USERS_COUNT', count } as const),
     pageChanged: (page: number) => ({ type: 'SA/PAGE_CHANGED', page } as const),
     setIsFetching: (isFetching: boolean) => ({ type: 'SA/SET_IS_FETCHING', isFetching } as const),
+    setCurrentPage: (currentPage: number) => ({ type: 'SA/SET_CURRENT_PAGE', currentPage } as const),
 }
 let initialState = {
     users: [] as Array<UserType>,
-    currentPage: 1,
+    pageNumber: 1,
     pageSize: 20,
     totalUsersCount: 0,
     isFetching: false,
     followingInProgress: [] as Array<number>,
+    currentPage: 1
 }
 const usersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
@@ -49,7 +51,7 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
         case 'SA/PAGE_CHANGED':
             return {
                 ...state,
-                currentPage: action.page
+                pageNumber: action.page
             }
         case 'SA/SET_IS_FETCHING':
             return {
@@ -62,6 +64,11 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
                 followingInProgress: action.isFetching
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
+            }
+        case 'SA/SET_CURRENT_PAGE':
+            return {
+                ...state,
+                currentPage: action.currentPage
             }
         default: return state
     }
@@ -79,11 +86,12 @@ const _followUnfollowFlow = async (
     }
     dispatch(actions.toggleFollowingInProgress(false, userId))
 }
-export const getUsers = (currentPage: number, pageSize: number): ThunkType =>
+export const getUsers = (pageNumber: number, pageSize: number): ThunkType =>
     async (dispatch, getState) => {
         dispatch(actions.setIsFetching(true))
-        let data = await usersAPI.getUsers(currentPage, pageSize)
-        dispatch(actions.pageChanged(currentPage))
+        dispatch(actions.setCurrentPage(pageNumber))
+        let data = await usersAPI.getUsers(pageNumber, pageSize)
+        dispatch(actions.pageChanged(pageNumber))
         dispatch(actions.setIsFetching(false))
         dispatch(actions.setUser(data.items))
         dispatch(actions.setTotalUsersCount(data.totalCount))
