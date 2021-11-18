@@ -44,7 +44,7 @@ export type GetItems = {
 }
 export type APIResponseData<D = {}, RC = ResultCodeEnum> = {
     data: D
-    messages: string
+    messages: Array<string>
     resultCode: RC
 }
 export enum ResultCodeEnum {

@@ -1,4 +1,3 @@
-//@ts-ignore
 import s from './FormsControls.module.css'
 import {Field, WrappedFieldProps} from 'redux-form'
 import { WrappedFieldMetaProps} from 'redux-form/lib/Field'
