@@ -34,3 +34,6 @@ export const getDialogsData = (state: AppStateType) =>{
 export const selectCurrentUseLogin = (state: AppStateType)=>{
     return state.authPage.login
 }
+export const getFilterForm = (state: AppStateType)=>{
+    return state.usersPage.filter
+}

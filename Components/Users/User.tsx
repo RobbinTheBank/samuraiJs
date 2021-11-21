@@ -6,6 +6,9 @@ import s from'./Users.module.css'
 
 const User: React.FC<PropsType> = ({ user, followingInProgress, unfollow, follow }) => {
     return <div>
+        <div>
+            
+        </div>
         <div >
             <NavLink to={'/profile/' + user.id}>
                 <img className={s.userPhoto} src={user.photos.large != null ? user.photos.large : userIcon} />

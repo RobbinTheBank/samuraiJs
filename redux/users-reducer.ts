@@ -15,6 +15,8 @@ export const actions = {
     pageChanged: (page: number) => ({ type: 'SA/PAGE_CHANGED', page } as const),
     setIsFetching: (isFetching: boolean) => ({ type: 'SA/SET_IS_FETCHING', isFetching } as const),
     setCurrentPage: (currentPage: number) => ({ type: 'SA/SET_CURRENT_PAGE', currentPage } as const),
+    setTermFindForm: (filter: FilterForm) => ({ type: 'SA/SET_TERM_FIND_FORM', filter } as const),
+
 }
 let initialState = {
     users: [] as Array<UserType>,
@@ -23,7 +25,11 @@ let initialState = {
     totalUsersCount: 0,
     isFetching: false,
     followingInProgress: [] as Array<number>,
-    currentPage: 1
+    currentPage: 1,
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 const usersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
@@ -70,13 +76,16 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
                 ...state,
                 currentPage: action.currentPage
             }
+        case 'SA/SET_TERM_FIND_FORM':
+            return { ...state, filter: action.filter }
+
         default: return state
     }
 }
 const _followUnfollowFlow = async (
     dispatch: Dispatch<ActionsTypes>,
     userId: number,
-    apiMethod: (userId: number)=> Promise<APIResponseData>,
+    apiMethod: (userId: number) => Promise<APIResponseData>,
     actionCreator: (userId: number) => ActionsTypes
 ) => {
     dispatch(actions.toggleFollowingInProgress(true, userId))
@@ -86,24 +95,27 @@ const _followUnfollowFlow = async (
     }
     dispatch(actions.toggleFollowingInProgress(false, userId))
 }
-export const getUsers = (pageNumber: number, pageSize: number): ThunkType =>
+export const getUsers = (pageNumber: number, pageSize: number, filter: FilterForm): ThunkType =>
     async (dispatch, getState) => {
         dispatch(actions.setIsFetching(true))
         dispatch(actions.setCurrentPage(pageNumber))
-        let data = await usersAPI.getUsers(pageNumber, pageSize)
+        dispatch(actions.setTermFindForm(filter))
+
+        let data = await usersAPI.getUsers(pageNumber, pageSize, filter.term, filter.friend)
         dispatch(actions.pageChanged(pageNumber))
         dispatch(actions.setIsFetching(false))
         dispatch(actions.setUser(data.items))
         dispatch(actions.setTotalUsersCount(data.totalCount))
     }
 export const follow = (userId: number): ThunkType => async (dispatch, getState) => {
-   await _followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), actions.followUser)
+    await _followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), actions.followUser)
 }
 export const unfollow = (userId: number): ThunkType => async (dispatch, getState) => {
-   await _followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), actions.unfollowUser)
+    await _followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), actions.unfollowUser)
 }
 export default usersReducer
 
 export type InitialStateType = typeof initialState
 type ActionsTypes = GetInferActions<typeof actions>
 type ThunkType = BaseThunkType<ActionsTypes>
+export type FilterForm = typeof initialState.filter

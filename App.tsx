@@ -13,6 +13,8 @@ import { ComponentType } from 'hoist-non-react-statics/node_modules/@types/react
 import {UsersContainer} from './Components/Users/UsersContainer'
 import style from './App.module.css'
 import Header from './Components/Header/Header';
+import 'antd/dist/antd.css'
+
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'))
 

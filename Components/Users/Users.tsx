@@ -1,9 +1,12 @@
-import React, {useEffect} from 'react';
+import { Button, Pagination } from 'antd';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers, follow, unfollow } from '../../redux/users-reducer';
-import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersPage } from '../../redux/users-selectors';
+import { getUsers, follow, unfollow, FilterForm } from '../../redux/users-reducer';
+import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersPage, getFilterForm } from '../../redux/users-selectors';
 import Paginator from '../common/Paginator/Paginator';
 import User from './User'
+import UsersSearchForm from './UsersSearchForm/UsersSearchForm';
+
 
 type PropsType = {}
 
@@ -13,36 +16,55 @@ const Users: React.FC<PropsType> = (props) => {
     const pageSize = useSelector(getPageSize)
     const currentPage = useSelector(getCurrentPage)
     const followingInProgress = useSelector(getFollowingInProgress)
+    const filter = useSelector(getFilterForm)
 
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        let actualPage = currentPage
-        let actualPageSize = pageSize
-        dispatch(getUsers(actualPage, actualPageSize))
-    },[])
-    const onPageChanged = (pageNumber: number)=>{
-        dispatch(getUsers(pageNumber, pageSize))
+    useEffect(() => {
+        dispatch(getUsers(currentPage, pageSize, filter))
+    }, [])
+    const onPageChanged = (pageNumber: number) => {
+        dispatch(getUsers(pageNumber, pageSize, filter))
     }
-    const followUser = (userId: number)=>{
+    const followUser = (userId: number) => {
         dispatch(follow(userId))
     }
-    const unfollowUser = (userId: number)=>{
+    const unfollowUser = (userId: number) => {
         dispatch(unfollow(userId))
     }
+    const onTermChanged = (filter: FilterForm) => {
+        dispatch(getUsers(1, pageSize, filter))
+    }
+    //@ts-ignore
+
     return (
         <div>
-            <div><Paginator totalUsersCount={totalUsersCount}
-                            pageSize={pageSize}
-                            currentPage={currentPage} 
-                            onPageChanged={onPageChanged} />
+            {/* <div><Paginator totalUsersCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChanged={onPageChanged} />
+            </div> */}
+            <div>
+                <Pagination
+                    total={totalUsersCount}
+                    pageSize= {pageSize} // tobe: need changed page size
+                    showSizeChanger
+                    showQuickJumper
+                    onChange={onPageChanged}
+                    current={currentPage}
+                    showTotal={total => `Total ${total} items`}
+                />
+            </div>
+
+            <div>
+                <UsersSearchForm onTermChanged={onTermChanged} />
             </div>
             <div>
-                {users.map(u => 
-                    <div> <User user={u} unfollow={unfollowUser} follow={followUser} 
-                                followingInProgress={followingInProgress} />
+                {users.map(u =>
+                    <div> <User user={u} unfollow={unfollowUser} follow={followUser}
+                        followingInProgress={followingInProgress} />
                     </div>
-                    )}
+                )}
             </div>
         </div>
     )

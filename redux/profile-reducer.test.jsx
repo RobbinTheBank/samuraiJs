@@ -19,8 +19,8 @@ it('Message of new post should be correct', ()=>{
     let newState = profileReducer(state, action)
     expect(newState.posts[2].message).toBe('new post added')
 })
-it('After deliting posts length should be decrement', ()=>{
-    let action = deletePost(1)
-    let newState = profileReducer(state, action)
-    expect(newState.posts.length).toBe(1)
-})
+// it('After deliting posts length should be decrement', ()=>{
+//     let action = deletePost(1)
+//     let newState = profileReducer(state, action)
+//     expect(newState.posts.length).toBe(1)
+// })
