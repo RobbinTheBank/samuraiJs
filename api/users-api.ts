@@ -1,4 +1,3 @@
-import { FilterForm } from "../redux/users-reducer"
 import { GetItems, instance, APIResponseData } from "./api"
 
 export const usersAPI = {

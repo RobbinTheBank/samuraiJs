@@ -1,8 +1,8 @@
 import { FormAction, stopSubmit } from "redux-form"
-import { ResultCodeEnum } from "../api/api"
-import { profileAPI } from "../api/profile-api"
-import { BaseThunkType, GetInferActions } from "./redux-store"
-import { PhotosType, PostType, ProfileType } from "./types/types"
+import { ResultCodeEnum } from "../../api/api"
+import { profileAPI } from "../../api/profile-api"
+import { BaseThunkType, GetInferActions } from "../redux-store"
+import { PhotosType, PostType, ProfileType } from "./../types/types"
 
 export const actions = {
     addPost: (newPostText: string) => ({ type: 'SA/ADD_POST', newPostText } as const),

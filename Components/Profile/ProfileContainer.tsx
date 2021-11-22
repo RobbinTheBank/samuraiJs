@@ -1,70 +1,61 @@
 import React from 'react';
-import Profile from './Profile';
-import { connect } from 'react-redux';
-import { getStatus, getUserProfile, updateStatus, setPhotos, saveProfile } from '../../redux/profile-reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStatus, getUserProfile } from '../../redux/reucers/profile-reducer';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { useEffect } from 'react';
-import { AppStateType } from '../../redux/redux-store';
+import { MyPostsContainer } from './MyPosts/MyPostsContainer';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
+import { getAutorizedUserId } from '../../redux/selectors/profile-selectors';
 
-const ProfileContainer: React.FC<PropsType>  = (props)=>{
-    const processingUsers =()=>{
+const ProfileContainer: React.FC<PropsType> = (props) => {
+    const autorizedUserId = useSelector(getAutorizedUserId)
+
+    const dispatch = useDispatch()
+
+    const getUserProfilePage = (userId: number) => {
+        dispatch(getUserProfile(userId))
+    }
+    const getStatusPage = (userId: number) => {
+        dispatch(getStatus(userId))
+    }
+    const processingUsers = () => {
         let userId: number | null = +props.match.params.userId
-        if(!userId){
-            userId = props.autorizedUserId
-            if(!userId){
+        if (!userId) {
+            userId = autorizedUserId
+            if (!userId) {
                 // todo: Replace push to Redirect
                 props.history.push('/login')
             }
         }
-        if(!userId){
+        if (!userId) {
             console.error("ID should exists in URI params or in state ('authorizedUserId')")
-        }else{
-            props.getUserProfile(userId)
-            props.getStatus(userId)
+        } else {
+            getUserProfilePage(userId)
+            getStatusPage(userId)
         }
-        
+
     }
-    useEffect(()=>{
+    useEffect(() => {
         processingUsers()
     }, [props.match.params.userId])
     return (
         <div >
-            <Profile {...props} profile={props.profile} 
-                      status={props.status} 
-                      updateStatus={props.updateStatus} 
-                      setPhotos={props.setPhotos}
-                      isOwner={!props.match.params.userId} 
-                      saveProfile={props.saveProfile} 
-                      />
+            <ProfileInfo isOwner={!props.match.params.userId} />
+
+            <MyPostsContainer />
         </div>
     )
 }
-let mapStateToProps = (state: AppStateType) => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    isAuth: state.authPage.isAuth,
-    autorizedUserId: state.authPage.userId
-})
 export default compose<React.ComponentType>(
     withRouter,
-    withAuthRedirect,
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, setPhotos, saveProfile})
-    //@ts-ignore
+    withAuthRedirect
 )(ProfileContainer)
 
 type PathParamsType = {
-    userId: string 
+    userId: string
 }
-type PropsType = mapStatePropsType & mapDispatchPropsType & RouteComponentProps<PathParamsType>
+type PropsType = RouteComponentProps<PathParamsType>
 
-type mapStatePropsType = ReturnType<typeof mapStateToProps>
-type mapDispatchPropsType = {
-    getUserProfile: (userId: number) => void; 
-    getStatus: (userId: number) => void;
-    updateStatus: ()=> void;
-    setPhotos: ()=> void; 
-    saveProfile: ()=> Promise<any>;
-}
 

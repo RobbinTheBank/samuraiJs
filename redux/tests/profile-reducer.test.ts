@@ -1,5 +1,5 @@
-import { APIResponseData, ResultCodeEnum } from "../api/api"
-import { profileAPI } from "../api/profile-api"
+import { APIResponseData, ResultCodeEnum } from "../../api/api"
+import { profileAPI } from "../../api/profile-api"
 
 
 

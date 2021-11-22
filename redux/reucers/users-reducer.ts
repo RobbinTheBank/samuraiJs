@@ -1,10 +1,9 @@
 import { Dispatch } from "redux"
-import { ThunkAction } from "redux-thunk"
-import { APIResponseData, ResultCodeEnum } from "../api/api"
-import { usersAPI } from "../api/users-api"
-import { updateObjectsInArray } from "../utils/updateObjectsInArray"
-import { AppStateType, BaseThunkType, GetInferActions } from "./redux-store"
-import { UserType } from "./types/types"
+import { APIResponseData, ResultCodeEnum } from "../../api/api"
+import { usersAPI } from "../../api/users-api"
+import { updateObjectsInArray } from "../../utils/updateObjectsInArray"
+import { BaseThunkType, GetInferActions } from "./../redux-store"
+import { UserType } from "./../types/types"
 
 export const actions = {
     followUser: (userId: number) => ({ type: 'SA/FOLLOW', userId } as const),

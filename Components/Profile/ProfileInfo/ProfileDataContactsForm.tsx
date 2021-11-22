@@ -25,7 +25,7 @@ const ProfileDataContactsForm: React.FC<InjectedFormProps<ProfileType, PropsType
         </div>
         <div>
             <b>about me:</b>
-            {createFormField<ProfileTypeKeys>(profile.aboutMe = 'about me', 'aboutMe', Textarea, [required])}
+            {createFormField<ProfileTypeKeys>(profile.aboutMe, 'aboutMe', Textarea, [required])}
         </div>
         <div>
             <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {

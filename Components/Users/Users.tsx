@@ -1,9 +1,8 @@
-import { Button, Pagination } from 'antd';
+import { Pagination } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers, follow, unfollow, FilterForm } from '../../redux/users-reducer';
-import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersPage, getFilterForm } from '../../redux/users-selectors';
-import Paginator from '../common/Paginator/Paginator';
+import { getUsers, follow, unfollow, FilterForm } from '../../redux/reucers/users-reducer';
+import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersPage, getFilterForm } from '../../redux/selectors/users-selectors';
 import User from './User'
 import UsersSearchForm from './UsersSearchForm/UsersSearchForm';
 

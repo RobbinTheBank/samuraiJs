@@ -1,9 +1,9 @@
-import { authAPI } from "../api/auth-api"
-import {ResultCaptchaEnum, ResultCodeEnum } from "../api/api"
-import { securityAPI } from "../api/api"
+import { authAPI } from "../../api/auth-api"
+import {ResultCaptchaEnum, ResultCodeEnum } from "../../api/api"
+import { securityAPI } from "../../api/api"
 import { FormAction, stopSubmit } from 'redux-form'
 import { ThunkAction } from "redux-thunk"
-import { AppStateType, BaseThunkType, GetInferActions } from "./redux-store"
+import { AppStateType, BaseThunkType, GetInferActions } from "../redux-store"
 
 let initialState = {
   email: null as (string | null),

@@ -3,8 +3,8 @@ import s from './Header.module.css';
 import logo from '../../assets/logo.png'
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsAuth, selectCurrentUseLogin } from '../../redux/users-selectors';
-import { logout } from '../../redux/auth-reducer';
+import { getIsAuth, selectCurrentUseLogin } from '../../redux/selectors/users-selectors';
+import { logout } from '../../redux/reucers/auth-reducer';
 
 const Header: React.FC<PropsType> = (props)=>{
     const isAuth = useSelector(getIsAuth)

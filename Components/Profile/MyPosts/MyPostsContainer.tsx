@@ -1,6 +1,5 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import { actions } from '../../../redux/profile-reducer';
+import { actions } from '../../../redux/reucers/profile-reducer';
 import { AppStateType } from '../../../redux/redux-store';
 import MyPosts, { MapDispatchProp, MapStateProps } from './MyPosts';
 

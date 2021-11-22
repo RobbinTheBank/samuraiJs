@@ -1,4 +1,4 @@
-import { GetInferActions } from "./redux-store"
+import { GetInferActions } from "../redux-store"
 
 const initialState = {
     dialogs: [

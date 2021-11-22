@@ -2,9 +2,9 @@ import React from "hoist-non-react-statics/node_modules/@types/react"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { withAuthRedirect } from "../../hoc/withAuthRedirect"
-import { actions } from "../../redux/dialogs-reducer"
+import { actions } from "../../redux/reucers/dialogs-reducer"
 import { AppStateType } from "../../redux/redux-store"
-import { getDialogsData, getDialogsMessages } from "../../redux/users-selectors"
+import { getDialogsData, getDialogsMessages } from "../../redux/selectors/users-selectors"
 import Dialogs from "./Dialogs"
 
 let mapStateToProps = (state: AppStateType)=>{

@@ -3,7 +3,7 @@ import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
-import { initializeApp } from './redux/app-reducer';
+import { initializeApp } from './redux/reucers/app-reducer';
 import Preloader from './Components/common/Preloader/Preloader';
 import { BrowserRouter, Redirect, Switch } from 'react-router-dom';
 import { AppStateType, store } from './redux/redux-store';

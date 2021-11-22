@@ -1,4 +1,4 @@
-import { DialogsType, InitialStateType, MessagesType } from "../../redux/dialogs-reducer"
+import { DialogsType, InitialStateType, MessagesType } from "../../redux/reucers/dialogs-reducer"
 import AddMessageForm from "./AddMessageForm/AddMessageForm"
 
 const Dialogs: React.FC<PropsType> = (props) => {

@@ -1,7 +1,8 @@
-import { UserType } from "./types/types"
-import usersReducer, { actions, InitialStateType } from "./users-reducer"
+import { UserType } from "../types/types"
+import usersReducer, { actions, InitialStateType } from "../reucers/users-reducer"
 
 let state: InitialStateType; 
+
 beforeEach(()=>{ // Tests will not change the current state
     state = {
         users: [{
@@ -49,7 +50,11 @@ beforeEach(()=>{ // Tests will not change the current state
         totalUsersCount: 0,
         isFetching: false,
         followingInProgress: [],
-        currentPage: 1
+        currentPage: 1,
+        filter: {
+            term: '',
+            friend: null
+        }
     }
 })
 

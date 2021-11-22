@@ -1,7 +1,7 @@
 import { Form, Formik, Field } from "formik"
 import { useSelector } from "react-redux";
-import { FilterForm } from "../../../redux/users-reducer";
-import { getFilterForm } from "../../../redux/users-selectors";
+import { FilterForm } from "../../../redux/reucers/users-reducer";
+import { getFilterForm } from "../../../redux/selectors/users-selectors";
 
 const UsersSearchForm: React.FC<PropsType> = (props) => {
     const usersFormValidate = (value: any) => {
