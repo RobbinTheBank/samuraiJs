@@ -21,7 +21,7 @@ const UsersSearchForm: React.FC<PropsType> = (props) => {
     }
     return <>
         <Formik
-            
+            enableReinitialize
             initialValues={{ term: filter.term, friend: filter.friend as null }}
             validate={usersFormValidate}
             onSubmit={onSubmit}

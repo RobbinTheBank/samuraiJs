@@ -1,6 +1,7 @@
 import { Pagination } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { getUsers, follow, unfollow, FilterForm } from '../../redux/reucers/users-reducer';
 import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersPage, getFilterForm } from '../../redux/selectors/users-selectors';
 import User from './User'
@@ -17,11 +18,47 @@ const Users: React.FC<PropsType> = (props) => {
     const followingInProgress = useSelector(getFollowingInProgress)
     const filter = useSelector(getFilterForm)
 
+    const history = useHistory()
     const dispatch = useDispatch()
-
+   
     useEffect(() => {
-        dispatch(getUsers(currentPage, pageSize, filter))
+        const queryString = require('query-string')
+        const parsed = queryString.parse(history.location.search);
+
+        let actualPage = currentPage
+        let actualFilter = filter
+        
+        if(!!parsed.term) actualFilter = {...actualFilter, term: parsed.term}
+        if(!!parsed.page) actualPage = +parsed.page
+        switch(parsed.friend){
+            case 'null':
+                actualFilter = {...actualFilter, friend: null}
+                break
+            case 'false':
+                actualFilter = {...actualFilter, friend: false}
+                break
+            case 'true':
+                actualFilter = {...actualFilter, friend: true}
+                break
+        }
+
+
+        dispatch(getUsers(actualPage, pageSize, actualFilter))
     }, [])
+    useEffect(()=>{
+        const queryString = require('query-string')
+        const query: QueryParamsType = {}
+
+        if(!!filter.term) query.term = filter.term
+        if(filter.friend !== null) query.friend = String(filter.friend)
+        if(currentPage !== 1) query.page = String(currentPage)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
+
     const onPageChanged = (pageNumber: number) => {
         dispatch(getUsers(pageNumber, pageSize, filter))
     }
@@ -44,6 +81,9 @@ const Users: React.FC<PropsType> = (props) => {
                 onPageChanged={onPageChanged} />
             </div> */}
             <div>
+                <UsersSearchForm onTermChanged={onTermChanged} />
+            </div>
+            <div>
                 <Pagination
                     total={totalUsersCount}
                     pageSize= {pageSize} // tobe: need changed page size
@@ -55,9 +95,7 @@ const Users: React.FC<PropsType> = (props) => {
                 />
             </div>
 
-            <div>
-                <UsersSearchForm onTermChanged={onTermChanged} />
-            </div>
+            
             <div>
                 {users.map(u =>
                     <div> <User user={u} unfollow={unfollowUser} follow={followUser}
@@ -69,3 +107,5 @@ const Users: React.FC<PropsType> = (props) => {
     )
 }
 export default Users
+
+type QueryParamsType = {term?: string, page?: string, friend?: string}
