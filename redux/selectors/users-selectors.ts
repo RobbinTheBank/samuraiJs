@@ -37,3 +37,6 @@ export const selectCurrentUseLogin = (state: AppStateType)=>{
 export const getFilterForm = (state: AppStateType)=>{
     return state.usersPage.filter
 }
+export const urlCaptchaSelector = (state: AppStateType)=>{
+    return state.authPage.urlCaptcha
+}

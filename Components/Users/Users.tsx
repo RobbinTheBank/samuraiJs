@@ -23,25 +23,15 @@ const Users: React.FC<PropsType> = (props) => {
    
     useEffect(() => {
         const queryString = require('query-string')
-        const parsed = queryString.parse(history.location.search);
+        const parsed = queryString.parse(history.location.search) as {term: string; page: string; friend: string;}
 
         let actualPage = currentPage
         let actualFilter = filter
         
         if(!!parsed.term) actualFilter = {...actualFilter, term: parsed.term}
-        if(!!parsed.page) actualPage = +parsed.page
-        switch(parsed.friend){
-            case 'null':
-                actualFilter = {...actualFilter, friend: null}
-                break
-            case 'false':
-                actualFilter = {...actualFilter, friend: false}
-                break
-            case 'true':
-                actualFilter = {...actualFilter, friend: true}
-                break
-        }
-
+        if(!!parsed.page) actualPage = +parsed.page // converted a number out of a string
+        if(!!parsed.friend) actualFilter = {...actualFilter, 
+            friend: parsed.friend === 'null' ? null : parsed.friend === 'true' ? true: false}
 
         dispatch(getUsers(actualPage, pageSize, actualFilter))
     }, [])
